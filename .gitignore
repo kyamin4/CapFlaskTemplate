@@ -142,7 +142,6 @@ credentials.json
 /docs
 /csv
 app.yaml
-*.pem
 req.conf
 appengine_config.py
 notes.py

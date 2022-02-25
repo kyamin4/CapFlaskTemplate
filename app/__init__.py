@@ -10,7 +10,7 @@ from flask_login import LoginManager
 from flask_mail import Mail
 
 app = Flask(__name__)
-app.jinja_options['extensions'].append('jinja2.ext.do')
+#app.jinja_options['extensions'].append('jinja2.ext.do')
 app.config["SECRET_KEY"] = os.environ.get("FLASK_SECRET_KEY") or os.urandom(20)
 
 from app.utils.secrets import getSecrets
