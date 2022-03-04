@@ -14,28 +14,42 @@ import datetime as dt
 
 # This is the route to list all posts
 @app.route('/post/list')
+# This means the user must be logged in to see this page
 @login_required
 def postList():
-    # this creates a mongoengine object that contains all the posts
+    # This retrieves all of the 'posts' that are stored in MongoDB and places them in a
+    # mongoengine object as a list of dictionaries name 'posts'.
     posts = Post.objects()
-    # this renders the posts.html page and sends the posts to the 
-    # template as a variable with all the posts in the object and
-    # can be displayed with a for loop in the template
+    # This renders (shows to the user) the posts.html template. it also sends the posts object 
+    # to the template as a variable named posts.  The template uses a for loop to display
+    # each post.
     return render_template('posts.html',posts=posts)
 
+# This route renders a form for the user to create a new post
 @app.route('/post/new', methods=['GET', 'POST'])
+# This means the user must be logged in to see this page
 @login_required
+# This is a function that is run when the user requests this route.
 def postNew():
+    # This gets a form object that can be displayed on the template
     form = PostForm()
 
+    # This is a conditional that evaluates to 'True' if the user submitted the form successfully 
     if form.validate_on_submit():
 
+        # This stores all the values that the user entered into the new post form. 
+        # Post() is a method for creating a new post. 'newPost' is the variable where the object
+        # that is the result of the Post() method is stored.  
         newPost = Post(
+            # the left side is the name of the field from the data table
+            # the right side is the data the user entered which is held in the form object.
             subject = form.subject.data,
             content = form.content.data,
             author = current_user.id,
+            # This sets the modifydate to the current datetime.
             modifydate = dt.datetime.utcnow
         )
+        # This is a metod that saves the data to the mongoDB database.
         newPost.save()
 
         return redirect(url_for('post',postID=newPost.id))
