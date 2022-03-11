@@ -60,6 +60,8 @@ class ProfileForm(FlaskForm):
     image = FileField("Image") 
     submit = SubmitField('Post')
     role = SelectField('Role', choices=[("Admin", "Admin"),("User", "User")])
+    occupation = StringField('Occupation')
+    bio = StringField('Biography')
 
 class PostForm(FlaskForm):
     subject = StringField('Subject', validators=[DataRequired()])
