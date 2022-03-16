@@ -13,3 +13,7 @@ def about_us():
 @app.route('/profile')
 def profile():
     return render_template('profilemy.html')
+
+@app.route('/posts')
+def posts():
+    return render_template('posts.html')
