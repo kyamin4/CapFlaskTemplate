@@ -35,7 +35,8 @@ def profileEdit():
             lname = form.lname.data,
             fname = form.fname.data,
             role = form.role.data,
-            occupation = form.occupation.data
+            occupation = form.occupation.data,
+            bio = form.bio.data
         )
         # This updates the profile image
         if form.image.data:
