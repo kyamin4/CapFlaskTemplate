@@ -18,10 +18,7 @@
                 {% if loop.index == 1 %}
                 <h3 class="display-5">Date</h3>
                 {% endif %}
-
-                <a href="/post/{{post.id}}">
                     {{moment(post.createdate).calendar()}}
-                </a>
             </div>
             <div class="col-2">
                 {% if loop.index == 1 %}
@@ -33,7 +30,9 @@
                 {% if loop.index == 1 %}
                     <h3 class="display-5">Subject</h3>
                 {% endif %}
-                {{post.subject}}
+                <a href="/post/{{post.id}}">
+                    {{post.subject}}
+                </a>
             </div>
         </div>
     {% endfor %}
