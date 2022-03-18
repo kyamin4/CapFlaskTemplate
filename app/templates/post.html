@@ -4,7 +4,7 @@
 
 {% if post %}
 
-{{moment(post.createdate).calendar()}} by {{post.author.username}} <br>
+created {{moment(post.createdate).calendar()}} by {{post.author.username}} <br>
 {% if post.modifydate %}
     modified {{moment(post.modifydate).calendar()}}
 {% endif %}
@@ -17,14 +17,14 @@
             <img width="40" class="bottom-image" src="/static/edit.png">
         </a>
     {% endif %}
-
+    <a href="/post/list" class="btn btn-primary btn-sm" role="button">Back to Posts</a>
     <h1 class="display-5">{{post.subject}}</h1>
     <p class="fs-3 text-break">
         {% if post.author.image %}
             <img width="120" class="img-thumbnail float-start me-2" src="data:image;base64,{{base64encode(post.author.image.read())}}">
         {% endif %}
-        {{post.content}}
-        <br>
+        {{post.category}} <br>
+        {{post.content}} <br>
         {% if post.fileupload %}
             <embed src="{{post.fileupload}}" width="800px" height="2100px" />
         {% endif %}

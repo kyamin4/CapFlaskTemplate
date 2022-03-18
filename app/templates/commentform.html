@@ -13,7 +13,7 @@
         <h1 class="display-5">{{post.subject}}</h1>
         {{post.content}} <br>
         <h1 class="display-5">New Comment</h1>
-
+        <a href="/post/{{post.id}}" class="btn btn-primary btn-sm" role="button">Back to Post</a>
         <form method=post>
             {{ form.hidden_tag() }}
             

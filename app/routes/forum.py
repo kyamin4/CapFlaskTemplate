@@ -46,6 +46,7 @@ def postNew():
             subject = form.subject.data,
             content = form.content.data,
             author = current_user.id,
+            category = form.category.data,
             fileupload = form.fileupload.data,
             # This sets the modifydate to the current datetime.
             modifydate = dt.datetime.utcnow

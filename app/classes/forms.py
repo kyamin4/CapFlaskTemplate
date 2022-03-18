@@ -67,6 +67,7 @@ class PostForm(FlaskForm):
     subject = StringField('Subject', validators=[DataRequired()])
     content = TextAreaField('Post', validators=[DataRequired()])
     fileupload = FileField('File Upload')
+    category = StringField('Category')
     submit = SubmitField('Post')
 
 class CommentForm(FlaskForm):

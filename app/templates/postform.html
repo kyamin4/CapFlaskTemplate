@@ -14,6 +14,16 @@
                 {% endfor %}
             </p>
             <p>
+                {{ form.category.label }} <br>
+                Ex: making a cake = cooking or baking.<br>
+                Seperate with commas and space for multiple categorys ", " <br>
+                {{ form.category(size=64) }}
+                <!--List the errors for this field-->
+                {% for error in form.category.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+            <p>
                 {{ form.content.label }} <br>
                 {{ form.content(cols=64, rows=10) }}
                 <!--List the errors for this field-->

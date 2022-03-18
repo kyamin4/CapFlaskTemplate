@@ -17,6 +17,9 @@
             <img class="img-thumbnail" width = "100" src="/static/bdog.jpg">
         {% endif %} 
     </div>
+    <div class="col-1">
+        <!-- Spacing stuff-->
+    </div>
     <div class="col">
         {% if current_user.fname and current_user.lname %}
             Real Name: {{current_user.fname}}  {{current_user.lname}} <br>
@@ -29,6 +32,9 @@
     </div>
     <div class="w-100"></div>
     <div class="col-3">Bio: {{current_user.bio}}</div>
+    <div class="col-1">
+        <!-- Spacing stuff-->
+    </div>
     <div class="col">Posts here</div>
 </div>
 <br>
