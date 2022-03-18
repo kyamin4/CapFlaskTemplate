@@ -33,6 +33,11 @@
         </li>
       </ul>
       <ul class="navbar-nav ms-3 mb-2">
+        <li class="nav-item">
+          <a class="nav-link" href="/about_us">About Us</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav ms-3 mb-2">
         {% if current_user.is_anonymous %}
           <li class="nav-item">
             <a class="nav-link" href="{{ url_for('login') }}">Login</a>
