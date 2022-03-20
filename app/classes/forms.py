@@ -61,7 +61,7 @@ class ProfileForm(FlaskForm):
     submit = SubmitField('Post')
     role = SelectField('Role', choices=[("Admin", "Admin"),("User", "User")])
     occupation = StringField('Occupation')
-    bio = StringField('Biography')
+    bio = TextAreaField('Biography')
 
 class PostForm(FlaskForm):
     subject = StringField('Subject', validators=[DataRequired()])
