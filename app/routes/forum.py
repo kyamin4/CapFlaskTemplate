@@ -14,7 +14,6 @@ import datetime as dt
 
 # This is the route to list all posts
 @app.route('/post/list')
-# This means the user must be logged in to see this page
 @login_required
 def postList():
     # This retrieves all of the 'posts' that are stored in MongoDB and places them in a

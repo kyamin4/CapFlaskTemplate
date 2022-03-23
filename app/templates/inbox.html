@@ -1,0 +1,38 @@
+
+{% extends 'base.html' %}
+
+{% block body %}
+<div class="row">
+    <div class="col-4">
+        <h1 class="display-1">All Chats</h1>
+    </div>
+    <div class="col">
+        <input class="form-control me-2" type="search" placeholder="Enter Username" aria-label="Search">
+        <a href="/chat/{{user.id}}" class="btn btn-primary btn-sm mt-5" role="button">New Chat</a>
+    </div>
+</div>
+
+{% if chats %}
+    {% for conversation in chats %}
+        <div class="row border-bottom">
+            <div class="col-2">
+                {% if loop.index == 1 %}
+                <h3 class="display-5">Date</h3>
+                {% endif %}
+                    {{moment(post.createdate).calendar()}}
+            </div>
+            <div class="col-2">
+                {% if loop.index == 1 %}
+                <h3 class="display-5">User</h3>
+                {% endif %}
+                <a href="/chat/{{user.id}}">
+                    {{chat.receiver.username}}
+                </a>
+            </div>
+        </div>
+    {% endfor %}
+{% else %}
+    <h1>No Conversations!</h1>
+{% endif %}
+
+{% endblock %}

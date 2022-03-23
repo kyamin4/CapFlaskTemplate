@@ -17,3 +17,7 @@ def profile():
 @app.route('/posts')
 def posts():
     return render_template('posts.html')
+
+@app.route('/inbox')
+def inbox():
+    return render_template('inbox.html')
