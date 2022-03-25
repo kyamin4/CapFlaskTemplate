@@ -1,18 +1,10 @@
 {% extends "base.html" %}
 
 {% block body %}
-        <h1></h1>
+        <h1>Create New Chat</h1>
 
         <form method=post>
             {{ form.hidden_tag() }}
-            <p>
-                {{ form.sender.label }} <br>
-                {{ form.subject(size=64) }}
-                <!--List the errors for this field-->
-                {% for error in form.subject.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                {% endfor %}
-            </p>
             <p>
                 {{ form.receiver.label }} <br>
                 {{ form.receiver(size=64) }}

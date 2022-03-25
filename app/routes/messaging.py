@@ -42,68 +42,33 @@ def chatNew():
         newChat = Chat(
             # the left side is the name of the field from the data table
             # the right side is the data the user entered which is held in the form object.
-            sender = form.sender.data,
             receiver = form.receiver.data,
-            category = form.category.data,
-            fileupload = form.fileupload.data,
-            # This sets the modifydate to the current datetime.
+            sender = current_user.id,
             modifydate = dt.datetime.utcnow
         )
         # This is a metod that saves the data to the mongoDB database.
-        newPost.save()
+        newChat.save()
+        #use two users IDs together for chat ID?
+        return redirect(url_for('chat',pchatID=newChat.id))
 
-        return redirect(url_for('post',postID=newPost.id))
+    return render_template('chatform.html',form=form)
 
-    return render_template('postform.html',form=form)
-
-@app.route('/post/<postID>')
+@app.route('/chat/<chatID>')
 @login_required
-def post(postID):
-    post = Post.objects.get(id=postID)
+def chat(chatID):
+    chat = Chat.objects.get(id=chatID)
     try:
-        comments = Comment.objects(post=post)
+        messages = Message.objects(chat=chat)
     except mongoengine.errors.DoesNotExist:
-        comments = None
+        messages = None
 
-    return render_template('post.html',post=post,comments=comments)
+    return render_template('chat.html',chat=chat,messages=messages)
 
-@app.route('/post/delete/<postID>')
+@app.route('/message/new/<chatID>', methods=['GET', 'POST'])
 @login_required
-def postDelete(postID):
-    deletePost = Post.objects.get(id=postID)
-    if current_user == deletePost.author:
-        deletePost.delete()
-        flash('The Post was deleted.')
-    else:
-        flash("You can't delete a post you don't own.")
-    posts = Post.objects()  
-    return render_template('posts.html',posts=posts)
-
-@app.route('/post/edit/<postID>', methods=['GET', 'POST'])
-@login_required
-def postEdit(postID):
-    editPost = Post.objects.get(id=postID)
-    if current_user != editPost.author:
-        flash("You can't edit a post you don't own.")
-        return redirect(url_for('post',postID=postID))
-    form = PostForm()
-    if form.validate_on_submit():
-        editPost.update(
-            subject = form.subject.data,
-            content = form.content.data,
-            modifydate = dt.datetime.utcnow
-        )
-        return redirect(url_for('post',postID=postID))
-
-    form.subject.data = editPost.subject
-    form.content.data = editPost.content
-
-    return render_template('postform.html',form=form)
-
-@app.route('/comment/new/<postID>', methods=['GET', 'POST'])
-@login_required
-def commentNew(postID):
-    post = Post.objects.get(id=postID)
+def messageNew(chatID):
+    chat = Chat.objects.get(id=chatID)
+    #i dont wanna use new form page, input on chat page
     form = CommentForm()
     if form.validate_on_submit():
         newComment = Comment(
@@ -115,10 +80,10 @@ def commentNew(postID):
         return redirect(url_for('post',postID=postID))
     return render_template('commentform.html',form=form,post=post)
 
-@app.route('/comment/edit/<commentID>', methods=['GET', 'POST'])
+@app.route('/message/edit/<messageID>', methods=['GET', 'POST'])
 @login_required
-def commentEdit(commentID):
-    editComment = Comment.objects.get(id=commentID)
+def messageEdit(messageID):
+    editMessage = Message.objects.get(id=messageID)
     if current_user != editComment.author:
         flash("You can't edit a comment you didn't write.")
         return redirect(url_for('post',postID=editComment.post.id))

@@ -2,6 +2,7 @@
 # and users fill them out.  Each form is an instance of of a class. Forms are managed by the 
 # Flask-WTForms library.
 
+from tokenize import String
 from flask.app import Flask
 from flask import flash
 from flask_wtf import FlaskForm
@@ -75,5 +76,8 @@ class CommentForm(FlaskForm):
     submit = SubmitField('Comment')
 
 class ChatForm(FlaskForm):
-    message = StringField('Message', validators=[DataRequired()])
+    receiver = StringField('Receiver', validators=[DataRequired()])
+
+class MessageForm(FlaskForm):
+    content = StringField('Sender', validators=[DataRequired()])
     submit = SubmitField('Message')
