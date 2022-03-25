@@ -21,3 +21,7 @@ def posts():
 @app.route('/inbox')
 def inbox():
     return render_template('inbox.html')
+
+@app.route('/chats')
+def chats():
+    return render_template('chats.html')
