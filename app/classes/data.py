@@ -3,6 +3,7 @@
 # like IntField, StringField etc.  This uses the Mongoengine Python Library. When you interact with the 
 # data you are creating an onject that is an instance of the class.
 
+from tokenize import String
 from app import app
 from flask import flash
 from flask_login import UserMixin
@@ -61,6 +62,29 @@ class Post(Document):
 class Comment(Document):
     author = ReferenceField('User',reverse_delete_rule=CASCADE) 
     post = ReferenceField('Post',reverse_delete_rule=CASCADE)
+    # This could be used to allow comments on comments
+    # comment = ReferenceField('Comment',reverse_delete_rule=CASCADE)
+    content = StringField()
+    createdate = DateTimeField(default=dt.datetime.utcnow)
+    modifydate = DateTimeField()
+
+    meta = {
+        'ordering': ['-createdate']
+    }
+
+class Chat(Document):
+    sender = ReferenceField('Sender',reverse_delete_rule=CASCADE) 
+    receiver = ReferenceField('Receiver',reverse_delete_rule=CASCADE)
+    createdate = DateTimeField(default=dt.datetime.utcnow)
+    modifydate = DateTimeField()
+
+    meta = {
+        'ordering': ['createdate']
+    }
+
+class Message(Document):
+    author = ReferenceField('User',reverse_delete_rule=CASCADE) 
+    chat = ReferenceField('Chat',reverse_delete_rule=CASCADE)
     # This could be used to allow comments on comments
     # comment = ReferenceField('Comment',reverse_delete_rule=CASCADE)
     content = StringField()
