@@ -49,7 +49,7 @@ def chatNew():
         # This is a metod that saves the data to the mongoDB database.
         newChat.save()
         #use two users IDs together for chat ID?
-        return redirect(url_for('chat',pchatID=newChat.id))
+        return redirect(url_for('chat',chatID=newChat.id))
 
     return render_template('chatform.html',form=form)
 

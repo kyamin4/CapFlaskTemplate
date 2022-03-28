@@ -73,7 +73,7 @@ class Comment(Document):
     }
 
 class Chat(Document):
-    receiver = ReferenceField('Receiver',reverse_delete_rule=CASCADE)
+    receiver = ReferenceField('User',reverse_delete_rule=CASCADE)
     createdate = DateTimeField(default=dt.datetime.utcnow)
     modifydate = DateTimeField()
 
@@ -84,8 +84,6 @@ class Chat(Document):
 class Message(Document):
     author = ReferenceField('User',reverse_delete_rule=CASCADE) 
     chat = ReferenceField('Chat',reverse_delete_rule=CASCADE)
-    # This could be used to allow comments on comments
-    # comment = ReferenceField('Comment',reverse_delete_rule=CASCADE)
     content = StringField()
     createdate = DateTimeField(default=dt.datetime.utcnow)
     modifydate = DateTimeField()
