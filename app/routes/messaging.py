@@ -12,8 +12,8 @@ from app.classes.forms import ChatForm, MessageForm
 from flask_login import login_required
 import datetime as dt
 
-# This is the route to list all posts
-@app.route('/chat/list')
+# This is the route to list all chats
+@app.route('/chats/list')
 @login_required
 def chatList():
     # This retrieves all of the 'posts' that are stored in MongoDB and places them in a
@@ -69,41 +69,41 @@ def chat(chatID):
 def messageNew(chatID):
     chat = Chat.objects.get(id=chatID)
     #i dont wanna use new form page, input on chat page
-    form = CommentForm()
+    form = MessageForm()
     if form.validate_on_submit():
-        newComment = Comment(
+        newMessage = Message(
             author = current_user.id,
-            post = postID,
+            chat = chatID,
             content = form.content.data
         )
-        newComment.save()
-        return redirect(url_for('post',postID=postID))
-    return render_template('commentform.html',form=form,post=post)
+        newMessage.save()
+        return redirect(url_for('chat',chatID=chatID))
+    return render_template('messageform.html',form=form,chat=chat)
 
 @app.route('/message/edit/<messageID>', methods=['GET', 'POST'])
 @login_required
 def messageEdit(messageID):
     editMessage = Message.objects.get(id=messageID)
-    if current_user != editComment.author:
-        flash("You can't edit a comment you didn't write.")
-        return redirect(url_for('post',postID=editComment.post.id))
-    post = Post.objects.get(id=editComment.post.id)
-    form = CommentForm()
+    if current_user != editMessage.author:
+        flash("You can't edit a message you didn't write.")
+        return redirect(url_for('chat',chatID=editMessage.chat.id))
+    chat = Chat.objects.get(id=editMessage.post.id)
+    form = MessageForm()
     if form.validate_on_submit():
-        editComment.update(
+        editMessage.update(
             content = form.content.data,
             modifydate = dt.datetime.utcnow
         )
-        return redirect(url_for('post',postID=editComment.post.id))
+        return redirect(url_for('chat',chatID=editMessage.chat.id))
 
-    form.content.data = editComment.content
+    form.content.data = editMessage.content
 
-    return render_template('commentform.html',form=form,post=post)   
+    return render_template('commentform.html',form=form,chat=chat)   
 
-@app.route('/comment/delete/<commentID>')
+@app.route('/message/delete/<messageID>')
 @login_required
-def commentDelete(commentID): 
-    deleteComment = Comment.objects.get(id=commentID)
-    deleteComment.delete()
-    flash('The comments was deleted.')
-    return redirect(url_for('post',postID=deleteComment.post.id)) 
+def messageDelete(messageID): 
+    deleteMessage = Message.objects.get(id=messageID)
+    deleteMessage.delete()
+    flash('The message was deleted.')
+    return redirect(url_for('chat',chatID=deleteMessage.chat.id)) 

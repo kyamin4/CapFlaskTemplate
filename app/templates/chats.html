@@ -12,30 +12,30 @@
         <input class="form-control" type="search" placeholder="Search Username" aria-label="Search">
     </div>
     <div class="col">
-        <a href="/chat" class="btn btn-primary btn-sm mt-5" role="button">New Chat</a>
+        <a href="/chat/new" class="btn btn-primary btn-sm mt-5" role="button">New Chat</a>
     </div>
 </div>
 
-{% if posts %}
-    {% for post in posts %}
+{% if chats %}
+    {% for chat in chats %}
         <div class="row border-bottom">
             <div class="col-2">
                 {% if loop.index == 1 %}
                 <h3 class="display-5">Date</h3>
                 {% endif %}
-                    {{moment(post.createdate).calendar()}}
+                    {{moment(chat.createdate).calendar()}}
             </div>
             <div class="col-2">
                 <!--do if statement, if user1 or user2 is the current user, display the other one-->
                 {% if loop.index == 1 %}
                 <h3 class="display-5">User</h3>
                 {% endif %}
-                {{post.author.username}}
+                {{chat.author.username}}
             </div>
         </div>
     {% endfor %}
 {% else %}
-    <h1>No Posts</h1>
+    <h1>No Chats</h1>
 {% endif %}
 
 {% endblock %}

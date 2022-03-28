@@ -13,7 +13,7 @@ from flask_login import login_required
 import datetime as dt
 
 # This is the route to list all posts
-@app.route('/post/list')
+@app.route('/posts/list')
 @login_required
 def postList():
     # This retrieves all of the 'posts' that are stored in MongoDB and places them in a
