@@ -5,12 +5,13 @@
 {% block body %}
 
 <a href="/chat/new/{{chat.id}}" class="btn btn-primary btn-sm" role="button">New Comment</a>
-
+    <p>{% Chat.receiver %}</p>
+    <p>{% Chat.sender %}</p>
     <div class="ms-5">
     {% if messages %}
     <h1 class="display-5">Messages</h1>
     {% for message in messages %}
-        {% if current_user == message.sender %}
+        {% if current_user.id == message.sender %}
             <a href="/message/delete/{{message.id}}"><img width="20" src="/static/delete.png"></a> 
             <a href="/message/edit/{{message.id}}"><img width="20" src="/static/edit.png"></a>
         {% endif %}
