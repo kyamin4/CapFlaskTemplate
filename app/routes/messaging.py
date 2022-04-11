@@ -22,7 +22,7 @@ def chatList():
     # This renders (shows to the user) the posts.html template. it also sends the posts object 
     # to the template as a variable named posts.  The template uses a for loop to display
     # each post.
-    return render_template('chats.html',posts=chats)
+    return render_template('chats.html',chats=chats)
 
 # This route renders a form for the user to create a new post
 @app.route('/chat/new', methods=['GET', 'POST'])
