@@ -76,7 +76,7 @@ class CommentForm(FlaskForm):
     submit = SubmitField('Comment')
 
 class ChatForm(FlaskForm):
-    receiver = StringField('Receiver', validators=[DataRequired()])
+    receivername = StringField('Receiver', validators=[DataRequired()])
     submit = SubmitField('Connect')
 
 class MessageForm(FlaskForm):

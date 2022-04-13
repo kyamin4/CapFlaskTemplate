@@ -7,10 +7,12 @@ from app import app, login
 import mongoengine.errors
 from flask import render_template, flash, redirect
 from flask_login import current_user
-from app.classes.data import Chat, Message
+from app.classes.data import Chat, Message, User
 from app.classes.forms import ChatForm, MessageForm
 from flask_login import login_required
 import datetime as dt
+
+from app.routes.default import posts
 
 # This is the route to list all chats
 @app.route('/chats/list')
@@ -22,7 +24,7 @@ def chatList():
     # This renders (shows to the user) the posts.html template. it also sends the posts object 
     # to the template as a variable named posts.  The template uses a for loop to display
     # each post.
-    return render_template('chats.html',chats=chats)
+    return render_template('chats.html',posts=chats)
 
 # This route renders a form for the user to create a new post
 @app.route('/chat/new', methods=['GET', 'POST'])
@@ -42,7 +44,8 @@ def chatNew():
         newChat = Chat(
             # the left side is the name of the field from the data table
             # the right side is the data the user entered which is held in the form object.
-            receiver = form.receiver.data,
+            receivername = form.receivername.data,
+            receiverid = getuserid(form.receivername.data),
             sender = current_user.id,
             modifydate = dt.datetime.utcnow
         )
@@ -107,3 +110,11 @@ def messageDelete(messageID):
     deleteMessage.delete()
     flash('The message was deleted.')
     return redirect(url_for('chat',chatID=deleteMessage.chat.id)) 
+
+
+def getuserid(username):
+    for person in User.objects:
+        if username == User.username:
+            return User.id
+        else:
+            return "User not found!"

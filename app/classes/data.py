@@ -74,7 +74,8 @@ class Comment(Document):
 
 class Chat(Document):
     sender = ReferenceField('User',reverse_delete_rule=CASCADE)
-    receiver = StringField()
+    receivername = StringField()
+    receiverid = ReferenceField('User',reverse_delete_rule=CASCADE)
     createdate = DateTimeField(default=dt.datetime.utcnow)
     modifydate = DateTimeField()
     meta = {

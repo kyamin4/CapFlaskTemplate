@@ -6,10 +6,10 @@
         <form method=post>
             {{ form.hidden_tag() }}
             <p>
-                {{ form.receiver.label }} <br>
-                {{ form.receiver(size=64) }}
+                {{ form.receivername.label }} <br>
+                {{ form.receivername(size=64) }}
                 <!--List the errors for this field-->
-                {% for error in form.receiver.errors %}
+                {% for error in form.receivername.errors %}
                     <span style="color: red;">[{{ error }}]</span>
                 {% endfor %}
             </p>
