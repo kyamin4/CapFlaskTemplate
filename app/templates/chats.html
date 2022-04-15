@@ -9,15 +9,16 @@
     <div class="col">
         <br>
         <br>
-        <input class="form-control" type="search" placeholder="Search Username" aria-label="Search">
+        <input class="form-control" type="search" placeholder="Search Username(not working)" aria-label="Search">
     </div>
     <div class="col">
         <a href="/chat/new" class="btn btn-primary btn-sm mt-5" role="button">New Chat</a>
     </div>
 </div>
 
-{% if chats %}
-    {% for chat in chats %}
+{% for chat in chats %}
+    <!--Checks to see if a user is involved in a chat-->
+    {% if current_user.id == chat.senderid or current_user.id == chat.receiverid %}
         <div class="row border-bottom">
             <div class="col-2">
                 {% if loop.index == 1 %}
@@ -26,16 +27,25 @@
                     {{moment(chat.createdate).calendar()}}
             </div>
             <div class="col-2">
-                <!--do if statement, if user1 or user2 is the current user, display the other one-->
+                <!-- user1 or user2 is the current user, display the other one-->
                 {% if loop.index == 1 %}
-                <h3 class="display-5">User</h3>
+                <h3 class="display-5">Receiver</h3>
                 {% endif %}
-                {{chat.sender.username}}
+                {% if current_user.id == chat.receiverid %}
+                    <a href="/chat/{{chat.id}}">
+                        {{chat.sender.username}}
+                    </a>
+                {% elif current_user.id == chat.senderid %}
+                    <a href="/chat/{{chat.id}}">
+                        {{chat.receiver.username}}
+                    </a>
+                {% endif %}
             </div>
         </div>
-    {% endfor %}
-{% else %}
-    <h1>No Chats</h1>
-{% endif %}
+    {% else %}
+        <h1>No chats</h1>
+
+    {% endif %}
+{% endfor %}
 
 {% endblock %}
