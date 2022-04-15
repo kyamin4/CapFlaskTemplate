@@ -24,7 +24,7 @@ def chatList():
     # This renders (shows to the user) the posts.html template. it also sends the posts object 
     # to the template as a variable named posts.  The template uses a for loop to display
     # each post.
-    return render_template('chats.html',posts=chats)
+    return render_template('chats.html',chats=chats)
 
 # This route renders a form for the user to create a new post
 @app.route('/chat/new', methods=['GET', 'POST'])
@@ -46,7 +46,8 @@ def chatNew():
             # the right side is the data the user entered which is held in the form object.
             receivername = form.receivername.data,
             receiverid = getuserid(form.receivername.data),
-            sender = current_user.id,
+            sendername = getusername(current_user.id),
+            senderid = current_user.id,
             modifydate = dt.datetime.utcnow
         )
         # This is a metod that saves the data to the mongoDB database.
@@ -113,8 +114,12 @@ def messageDelete(messageID):
 
 
 def getuserid(username):
-    for person in User.objects:
-        if username == User.username:
-            return User.id
+    for user in User.objects:
+        if username == user.username:
+            return user.id
         else:
-            return "User not found!"
+            return "user not found!"
+
+def getusername(uid):
+    userid = User.objects.get(id=uid)
+    return userid.username
