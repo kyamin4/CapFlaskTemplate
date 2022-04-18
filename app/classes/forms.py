@@ -80,5 +80,5 @@ class ChatForm(FlaskForm):
     submit = SubmitField('Connect')
 
 class MessageForm(FlaskForm):
-    content = StringField('Message', validators=[DataRequired()])
+    content = TextAreaField('Message', validators=[DataRequired()])
     submit = SubmitField('Send')

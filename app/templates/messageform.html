@@ -16,7 +16,7 @@
             {{ form.hidden_tag() }}
             
             {{ form.content.label }} <br>
-            {{ form.content(cols=64) }}
+            {{ form.content(cols=64, rows=10) }}
             <!--List the errors for this field-->
             {% for error in form.content.errors %}
                 <span style="color: red;">[{{ error }}]</span>

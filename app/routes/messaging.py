@@ -46,7 +46,7 @@ def chatNew():
             # the right side is the data the user entered which is held in the form object.
             receivername = form.receivername.data,
             receiverid = getuserid(form.receivername.data),
-            sendername = getusername(current_user.id),
+            sendername = current_user.username,
             senderid = current_user.id,
             modifydate = dt.datetime.utcnow
         )
@@ -114,12 +114,9 @@ def messageDelete(messageID):
 
 
 def getuserid(username):
-    for user in User.objects:
+    allUsers = User.objects()
+    for user in allUsers:
         if username == user.username:
             return user.id
         else:
             return "user not found!"
-
-def getusername(uid):
-    userid = User.objects.get(id=uid)
-    return userid.username
