@@ -3,9 +3,11 @@
 # Created, Read, Updated or Deleted (CRUD)
 
 from flask.helpers import url_for
+from sqlalchemy import false
+import win32api
 from app import app, login
 import mongoengine.errors
-from flask import render_template, flash, redirect
+from flask import render_template, flash, redirect, session
 from flask_login import current_user
 from app.classes.data import Chat, Message, User
 from app.classes.forms import ChatForm, MessageForm
@@ -29,14 +31,22 @@ def chatList():
 # This route renders a form for the user to create a new post
 @app.route('/chat/new', methods=['GET', 'POST'])
 # This means the user must be logged in to see this page
+
 @login_required
 # This is a function that is run when the user requests this route.
 def chatNew():
     # This gets a form object that can be displayed on the template
+    existingChat = False
+    allChats = Chat.objects()
     form = ChatForm()
 
     # This is a conditional that evaluates to 'True' if the user submitted the form successfully 
     if form.validate_on_submit():
+        try:
+            receiver = User.objects.get(username=form.receivername.data)
+        except:
+            win32api.MessageBox(0, 'User not found, check for exactness!', 'Error', 0x00001000)
+            return redirect(url_for('chatNew'))
 
         # This stores all the values that the user entered into the new post form. 
         # Post() is a method for creating a new post. 'newPost' is the variable where the object
@@ -50,11 +60,18 @@ def chatNew():
             senderid = current_user.id,
             modifydate = dt.datetime.utcnow
         )
-        # This is a metod that saves the data to the mongoDB database.
-        newChat.save()
-        #use two users IDs together for chat ID?
-        return redirect(url_for('chat',chatID=newChat.id))
+        #check if theres an existing chat between the two users. 
+        for chat in allChats:
+            if((current_user.id == chat.senderid and form.receivername.data == chat.receivername) or (current_user.id == chat.receiverid and chat.sendername == form.receivername.data)):
+                existingChat = True
 
+        if existingChat:
+            win32api.MessageBox(0, 'A chat between you and target user already exists!', 'Error', 0x00001000)
+            return redirect(url_for('chatNew'))
+        else:
+            newChat.save()
+            return redirect(url_for('chat',chatID=newChat.id))
+        
     return render_template('chatform.html',form=form)
 
 @app.route('/chat/<chatID>')
@@ -72,7 +89,6 @@ def chat(chatID):
 @login_required
 def messageNew(chatID):
     chat = Chat.objects.get(id=chatID)
-    #i dont wanna use new form page, input on chat page
     form = MessageForm()
     if form.validate_on_submit():
         newMessage = Message(
@@ -118,5 +134,4 @@ def getuserid(username):
     for user in allUsers:
         if username == user.username:
             return user.id
-        else:
-            return "user not found!"
+

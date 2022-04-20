@@ -4,7 +4,9 @@
 {% block body %}
 
 {% if chat %}
-    <a href="/message/new/{{chat.id}}" class="btn btn-primary btn-sm" role="button">New Comment</a>
+    <a href="/message/new/{{chat.id}}" class="btn btn-primary btn-sm" role="button">New Message</a>
+    <a href="/chats/list" class="btn btn-primary btn-sm" role="button">Back to Chats</a>
+
     <p>{{ chat.receivername }}</p>
     <div class="ms-5">
         {% if messages %}

@@ -15,36 +15,33 @@
         <a href="/chat/new" class="btn btn-primary btn-sm mt-5" role="button">New Chat</a>
     </div>
 </div>
-{% allChats = Chat.objects() %}
-{% for chat in allChats %}
-    <!--Checks to see if a user is involved in a chat-->
-    {% if current_user.id == chat.senderid or current_user.id == chat.receiverid %}
-        <div class="row border-bottom">
-            <div class="col-2">
-                {% if loop.index == 1 %}
-                    <h3 class="display-5">Date</h3>
-                {% endif %}
+
+{% for chat in chats %}
+    <div class="row border-bottom">
+        <div class="col-2">
+            {% if loop.index == 1 %}
+                <h3 class="display-5">Date</h3>
+            {% endif %}
+            {% if current_user.id == chat.senderid or current_user.id == chat.receiverid %}
                 {{moment(chat.createdate).calendar()}}
-            </div>
-            <div class="col-2">
-                <!-- sender or receiver is the current user, display the other one-->
-                {% if loop.index == 1 %}
-                    <h3 class="display-5">Receiver</h3>
-                {% endif %}
-                {% if current_user.id == chat.receiverid %}
-                    <a href="/chat/{{chat.id}}">
-                        {{chat.sendername}}
-                    </a>
-                {% elif current_user.id == chat.senderid %}
-                    <a href="/chat/{{chat.id}}">
-                        {{chat.receivername}}
-                    </a>
-                {% endif %}
-            </div>
+            {% endif %}
         </div>
-    {% else %}
-        <h1>No chats</h1>
-    {% endif %}
+        <div class="col-2">
+            <!-- sender or receiver is the current user, display the other one-->
+            {% if loop.index == 1 %}
+                <h3 class="display-5">Receiver</h3>
+            {% endif %}
+            {% if current_user.id == chat.receiverid %}
+                <a href="/chat/{{chat.id}}">
+                    {{chat.sendername}}
+                </a>
+            {% elif current_user.id == chat.senderid %}
+                <a href="/chat/{{chat.id}}">
+                    {{chat.receivername}}
+                </a>
+            {% endif %}
+        </div>
+    </div>
 {% endfor %}
 
 {% endblock %}
