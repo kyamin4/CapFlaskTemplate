@@ -12,7 +12,7 @@
 
         <h1 class="display-5">New Message</h1>
         <a href="/chat/{{chat.id}}" class="btn btn-primary btn-sm" role="button">Back to Chat</a>
-        <form method=chat>
+        <form method="post">
             {{ form.hidden_tag() }}
             
             {{ form.content.label }} <br>

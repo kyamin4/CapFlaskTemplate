@@ -84,7 +84,7 @@ class Chat(Document):
     }
 
 class Message(Document):
-    sender = ReferenceField('User',reverse_delete_rule=CASCADE) 
+    author = ReferenceField('User',reverse_delete_rule=CASCADE) 
     chat = ReferenceField('Chat',reverse_delete_rule=CASCADE)
     content = StringField()
     createdate = DateTimeField(default=dt.datetime.utcnow)

@@ -22,7 +22,7 @@
             {% if loop.index == 1 %}
                 <h3 class="display-5">Date</h3>
             {% endif %}
-            {% if current_user.id == chat.senderid or current_user.id == chat.receiverid %}
+            {% if current_user == chat.senderid or current_user == chat.receiverid %}
                 {{moment(chat.createdate).calendar()}}
             {% endif %}
         </div>
@@ -31,11 +31,11 @@
             {% if loop.index == 1 %}
                 <h3 class="display-5">Receiver</h3>
             {% endif %}
-            {% if current_user.id == chat.receiverid %}
+            {% if current_user == chat.receiverid %}
                 <a href="/chat/{{chat.id}}">
-                    {{chat.sendername}}
+                    {{chat.senderid.username}}
                 </a>
-            {% elif current_user.id == chat.senderid %}
+            {% elif current_user == chat.senderid %}
                 <a href="/chat/{{chat.id}}">
                     {{chat.receivername}}
                 </a>

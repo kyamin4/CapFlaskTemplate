@@ -23,7 +23,7 @@ def postList():
     # to the template as a variable named posts.  The template uses a for loop to display
     # each post.
     return render_template('posts.html',posts=posts)
-
+    
 # This route renders a form for the user to create a new post
 @app.route('/post/new', methods=['GET', 'POST'])
 # This means the user must be logged in to see this page

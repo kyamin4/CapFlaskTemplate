@@ -7,21 +7,27 @@
     <a href="/message/new/{{chat.id}}" class="btn btn-primary btn-sm" role="button">New Message</a>
     <a href="/chats/list" class="btn btn-primary btn-sm" role="button">Back to Chats</a>
 
-    <p>{{ chat.receivername }}</p>
+    <h1>Messaging: {% if current_user.username == chat.receivername %}
+            {{ chat.senderid.username }}
+        {% elif current_user.username == chat.senderid.username %}
+            {{ chat.receivername }}
+        {% endif %}
+    </h1>
+    
     <div class="ms-5">
         {% if messages %}
-            <h1 class="display-5">Messages</h1>
+            <h4 class="display-5">Messages: </h4>
             {% for message in messages %}
                 {% if current_user.id == message.sender %}
                     <a href="/message/delete/{{message.id}}"><img width="20" src="/static/delete.png"></a> 
                     <a href="/message/edit/{{message.id}}"><img width="20" src="/static/edit.png"></a>
                 {% endif %}
-                {{moment(message.createdate).calendar()}} {{message.message.username}} 
+                {{moment(message.createdate).calendar()}}
                 {% if message.modifydate %}
                     modified {{moment(message.modifydate).calendar()}}
                 {% endif %}
                 <br>
-                <p class="fs-3">{{message.content}}</p>
+                <p class="fs-3">{{message.content}} - {{message.author.username}} </p>
             {% endfor %}
         {% else %}
             <h1 class="display-5">No Messages</h1>

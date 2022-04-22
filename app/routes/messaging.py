@@ -62,8 +62,10 @@ def chatNew():
         )
         #check if theres an existing chat between the two users. 
         for chat in allChats:
-            if((current_user.id == chat.senderid and form.receivername.data == chat.receivername) or (current_user.id == chat.receiverid and chat.sendername == form.receivername.data)):
+            if((current_user.id == chat.senderid and newChat.receivername == chat.receivername) or (current_user.id == chat.receiverid and chat.sendername == newChat.receivername)):
                 existingChat = True
+            else:
+                existingChat = False
 
         if existingChat:
             win32api.MessageBox(0, 'A chat between you and target user already exists!', 'Error', 0x00001000)
@@ -93,7 +95,7 @@ def messageNew(chatID):
     if form.validate_on_submit():
         newMessage = Message(
             author = current_user.id,
-            chat = chatID,
+            chat = chat,
             content = form.content.data
         )
         newMessage.save()
