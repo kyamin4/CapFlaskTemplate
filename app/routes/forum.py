@@ -2,6 +2,7 @@
 # a forum where a posts and comments on those posts can be
 # Created, Read, Updated or Deleted (CRUD)
 
+from fileinput import filename
 from flask.helpers import url_for
 from app import app, login
 import mongoengine.errors
@@ -11,6 +12,8 @@ from app.classes.data import Post, Comment
 from app.classes.forms import PostForm, CommentForm
 from flask_login import login_required
 import datetime as dt
+
+from app.routes.file_upload import upload_file
 
 # This is the route to list all posts
 @app.route('/posts/list')
@@ -46,7 +49,7 @@ def postNew():
             content = form.content.data,
             author = current_user.id,
             category = form.category.data,
-            fileupload = form.fileupload.data,
+            fileupload = upload_file,
             # This sets the modifydate to the current datetime.
             modifydate = dt.datetime.utcnow
         )
