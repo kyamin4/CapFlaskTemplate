@@ -23,12 +23,11 @@ created {{moment(post.createdate).calendar()}} by {{post.author.username}} <br>
         {% if post.author.image %}
             <img width="120" class="img-thumbnail float-start me-2" src="data:image;base64,{{base64encode(post.author.image.read())}}">
         {% endif %}
-        {{post.category}} <br>
-        {{post.content}} <br>
+        Category(s): {{post.category}} <br>
+        Content: {{post.content}} <br>
         {% if post.fileupload %}
-            <embed src="{{post.fileupload}}" width="800px" height="2100px" />
+            <embed src="{{post.fileupload}}"/>
         {% endif %}
-        {{post.fileupload}}
     </p>
 
 

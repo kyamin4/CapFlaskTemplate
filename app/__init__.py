@@ -9,9 +9,18 @@ import base64
 from flask_login import LoginManager
 from flask_mail import Mail
 
+UPLOAD_FOLDER = '/app/UPLOAD_FOLDER'
+
+
+
 app = Flask(__name__)
 #app.jinja_options['extensions'].append('jinja2.ext.do')
 app.config["SECRET_KEY"] = os.environ.get("FLASK_SECRET_KEY") or os.urandom(20)
+
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
+
+
 
 from app.utils.secrets import getSecrets
 
