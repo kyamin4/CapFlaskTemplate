@@ -54,7 +54,7 @@ def postNew():
         )
 
         if form.image.data:
-            newPost.image.put(form.image.data, content_type = 'image/jpg')
+            newPost.image.put(form.image.data, content_type = 'image')
         # This is a metod that saves the data to the mongoDB database.
         newPost.save()
 

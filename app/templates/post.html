@@ -26,10 +26,11 @@ created {{moment(post.createdate).calendar()}} by {{post.author.username}} <br>
         Category(s): {{post.category}} <br>
         Content: {{post.content}} <br>
         {% if post.image %}
-            <img width="120" class="img-thumbnail float-start me-2" src="data:image;base64,{{base64encode(post.image.read())}}">
+            <img width="400" class="img-thumbnail float-start me-2" src="data:image;base64,{{base64encode(post.image.read())}}">
         {% endif %}
     </p>
 
+    <br>
 
     <a href="/comment/new/{{post.id}}" class="btn btn-primary btn-sm" role="button">New Comment</a>
 
