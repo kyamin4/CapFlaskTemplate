@@ -38,7 +38,6 @@ def postNew():
 
     # This is a conditional that evaluates to 'True' if the user submitted the form successfully 
     if form.validate_on_submit():
-
         # This stores all the values that the user entered into the new post form. 
         # Post() is a method for creating a new post. 'newPost' is the variable where the object
         # that is the result of the Post() method is stored.  
@@ -49,10 +48,13 @@ def postNew():
             content = form.content.data,
             author = current_user.id,
             category = form.category.data,
-            fileupload = upload_file,
+            #fileupload = upload_file,
             # This sets the modifydate to the current datetime.
             modifydate = dt.datetime.utcnow
         )
+
+        if form.image.data:
+            newPost.image.put(form.image.data, content_type = 'image/jpg')
         # This is a metod that saves the data to the mongoDB database.
         newPost.save()
 

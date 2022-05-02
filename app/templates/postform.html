@@ -32,10 +32,11 @@
                 {% endfor %}
             </p>
             <p>
-                {{form.fileupload.label }} <br>
-                <input type="file" accept=".txt, .pdf, .png, .jpg, .jpeg, .gif">
+                {{ form.image.label }} <br>
+                {{ form.image() }}
+                <!-- <input type="file" accept=".txt, .pdf, .png, .jpg, .jpeg, .gif"> -->
                 <!--List the errors for this field-->
-                {% for error in form.fileupload.errors %}
+                {% for error in form.image.errors %}
                     <span style="color: red;">[{{ error }}]</span>
                 {% endfor %}
             </p>

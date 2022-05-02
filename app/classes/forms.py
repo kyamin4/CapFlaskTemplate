@@ -67,7 +67,7 @@ class ProfileForm(FlaskForm):
 class PostForm(FlaskForm):
     subject = StringField('Subject', validators=[DataRequired()])
     content = TextAreaField('Post', validators=[DataRequired()])
-    fileupload = FileField('File Upload')
+    image = FileField('Image Upload')
     category = StringField('Category')
     submit = SubmitField('Post')
 

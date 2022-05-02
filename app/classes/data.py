@@ -51,7 +51,7 @@ class Post(Document):
     subject = StringField()
     content = StringField()
     category = StringField()
-    fileupload = FileField()
+    image = FileField()
     createdate = DateTimeField(default=dt.datetime.utcnow)
     modifydate = DateTimeField()
 
