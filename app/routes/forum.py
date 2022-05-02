@@ -16,7 +16,7 @@ import datetime as dt
 from app.routes.file_upload import upload_file
 
 # This is the route to list all posts
-@app.route('/posts/list')
+@app.route('/post/list')
 @login_required
 def postList():
     # This retrieves all of the 'posts' that are stored in MongoDB and places them in a

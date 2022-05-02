@@ -26,7 +26,7 @@ created {{moment(post.createdate).calendar()}} by {{post.author.username}} <br>
         Category(s): {{post.category}} <br>
         Content: {{post.content}} <br>
         {% if post.image %}
-            <embed src="{{post.image}}"/>
+            <img width="120" class="img-thumbnail float-start me-2" src="data:image;base64,{{base64encode(post.image.read())}}">
         {% endif %}
     </p>
 
