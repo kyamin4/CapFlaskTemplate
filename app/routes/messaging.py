@@ -64,6 +64,8 @@ def chatNew():
         for chat in allChats:
             if((current_user.id == chat.senderid and newChat.receivername == chat.receivername) or (current_user.id == chat.receiverid and chat.sendername == newChat.receivername)):
                 existingChat = True
+                chatID=chat.id
+                return redirect(url_for('chat',chatID = chatID))
             else:
                 existingChat = False
 
